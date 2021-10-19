@@ -232,15 +232,52 @@
                 },
                 //添加
                 handleAdd () {
+                    // 新增检查项确定按钮之后, 先进行数据校验, 然后提交表单
+                    // 表单校验
+                    this.$refs['dataAddForm'].validate((valid) => {
+                        if (valid) {
+                            // 表单校验通过, 发送ajax请求, 将录入的数据提交到后台
+                            axios.post("/checkitem/add.do", this.formData).then((res) => {
+                                // 关闭新增窗口
+                                this.dialogFormVisible = false;
+                                if (res.data.flag) {
+                                    // 执行成功
+                                    // 新增成功之后, 需要重新调用分页查询方法, 查询出最新数据
+                                    this.findPage();
+                                    // 弹出提示信息
+                                    this.$message({
+                                        message:res.data.message,
+                                        type:'success'
+                                    });
+                                } else {
+                                    // 执行失败
+                                    this.$message({
+                                        message:res.data.message
+                                    });
+                                }
+                            });
+
+                        } else {
+                            // 校验不通过
+                            this.$message.error("数据校验失败, 请检查你输入的信息是否正确! ");
+                            return false;
+                        }
+                    });
                 },
                 //分页查询
                 findPage() {
                 },
                 // 重置表单
                 resetForm() {
+                    // 重置数据
+                    this.formData = {};
                 },
                 // 弹出添加窗口
                 handleCreate() {
+                    // 将dialogFormVisible设置为true, 目的是为了弹出新增窗口
+                    this.dialogFormVisible = true;
+                    // 重置数据
+                    this.resetForm();
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {
