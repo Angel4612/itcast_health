@@ -67,4 +67,32 @@ public class CheckItemController {
 
         return new Result(true, MessageConstant.DELETE_CHECKITEM_SUCCESS);
     }
+
+    /**
+     * 根据id查找对应信息
+     */
+    @RequestMapping("/findById")
+    public Result findById(Integer id) {
+        try {
+            CheckItem checkItem1 = checkItemService.findById(id);
+            return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, checkItem1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(true, MessageConstant.QUERY_CHECKITEM_FAIL);
+        }
+    }
+
+    /**
+     * 编辑检查项
+     */
+    @RequestMapping("/edit")
+    public Result edit(@RequestBody CheckItem checkItem) {
+        try {
+            checkItemService.edit(checkItem);
+            return new Result(true, MessageConstant.EDIT_CHECKITEM_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.EDIT_CHECKITEM_FAIL);
+        }
+    }
 }

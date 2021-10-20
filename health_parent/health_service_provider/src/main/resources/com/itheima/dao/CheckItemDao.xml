@@ -27,4 +27,43 @@
     <delete id="deleteById" parameterType="Integer">
         delete from t_checkiter where id = #{id}
     </delete>
+
+    <!--根据id查找-->
+    <select id="findById" resultType="com.itheima.pojo.CheckItem" parameterType="Integer" >
+        select * from t_checkitem where id = #{id}
+    </select>
+
+    <!--编辑检查项-->
+    <update id="edit" parameterType="com.itheima.pojo.CheckItem">
+        update t_checkitem
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="age != null">
+                 age = #{age},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="attention != null">
+                attention = #{attention},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
 </mapper>

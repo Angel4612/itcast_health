@@ -333,7 +333,7 @@
             // 弹出编辑窗口
             handleUpdate(row) {
                 // 发送异步请求, 获取检查项信息
-                /*axios.get("/checkitem/findById.do?id=" + row.id).then((res) => {
+                axios.get("/checkitem/findById.do?id=" + row.id).then((res) => {
                     if (res.data.flag) {
                         // 如果请求成功, 就弹出编辑窗口
                         // 设置弹出编辑对话框为true
@@ -341,13 +341,12 @@
                         // 将数据显示到页面上
                         // 通过响应的信息来显示
                         this.formData = res.data.data;
+                    } else {
+                        // 如果请求失败, 提示失败信息
+                        this.$message.error("获取数据失败, 请刷新当前页面");
                     }
-                });*/
+                });
 
-                // 如果请求失败, 提示失败信息
-
-
-                this.dialogFormVisible4Edit = true;
             },
             //切换页码
             handleCurrentChange(currentPage) {

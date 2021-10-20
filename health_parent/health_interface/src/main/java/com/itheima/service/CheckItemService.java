@@ -15,5 +15,11 @@ public interface CheckItemService {
     PageResult pageQuery(QueryPageBean queryPageBean);
 
     /*删除检查项的功能*/
-    public void delete(Integer id);
+    void delete(Integer id);
+
+    /*根据id查找信息*/
+    CheckItem findById(Integer id);
+
+    /*编辑检查项*/
+    void edit(CheckItem checkItem);
 }

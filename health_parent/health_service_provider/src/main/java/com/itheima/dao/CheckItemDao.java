@@ -2,6 +2,7 @@ package com.itheima.dao;
 
 import com.github.pagehelper.Page;
 import com.itheima.entity.QueryPageBean;
+import com.itheima.entity.Result;
 import com.itheima.pojo.CheckItem;
 
 public interface CheckItemDao {
@@ -19,4 +20,10 @@ public interface CheckItemDao {
 
     /*根据id删除*/
     void deleteById(Integer id);
+
+    /*根据id删除*/
+    CheckItem findById(Integer id);
+
+    /*编辑检查项*/
+    void edit(CheckItem checkItem);
 }
