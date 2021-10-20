@@ -234,6 +234,35 @@
         methods: {
             //编辑
             handleEdit() {
+                // 进行表单校验
+                this.$refs['dataEditForm'].validate((valid) => {
+                    if (valid) {
+                        // 表单校验成功, 发送请求
+                        axios.post("/checkitem/edit.do", this.formData).then(res => {
+                            // 隐藏编辑窗口
+                            this.dialogFormVisible4Edit = false;
+                            // 如果编辑成功, 弹出成功提示信息
+                            if (res.data.flag) {
+                                this.$message({
+                                    message: res.data.message,
+                                    type: 'success'
+                                });
+                            } else {
+                                // 如果编辑失败, 弹出错误提示信息
+                                this.$message({
+                                    message: res.data.message
+                                });
+                            }
+                        }).finally(() => {
+                            // 无论怎么样, 返回之后都要重新发送请求查询分页数据
+                            this.findPage();
+                        });
+                    } else {
+                        // 表单校验失败, 弹出失败信息
+                        this.$message.error("表单数据校验失败");
+                        return false;
+                    }
+                });
             },
             //添加
             handleAdd() {
@@ -303,6 +332,22 @@
             },
             // 弹出编辑窗口
             handleUpdate(row) {
+                // 发送异步请求, 获取检查项信息
+                /*axios.get("/checkitem/findById.do?id=" + row.id).then((res) => {
+                    if (res.data.flag) {
+                        // 如果请求成功, 就弹出编辑窗口
+                        // 设置弹出编辑对话框为true
+                        this.dialogFormVisible4Edit = true;
+                        // 将数据显示到页面上
+                        // 通过响应的信息来显示
+                        this.formData = res.data.data;
+                    }
+                });*/
+
+                // 如果请求失败, 提示失败信息
+
+
+                this.dialogFormVisible4Edit = true;
             },
             //切换页码
             handleCurrentChange(currentPage) {

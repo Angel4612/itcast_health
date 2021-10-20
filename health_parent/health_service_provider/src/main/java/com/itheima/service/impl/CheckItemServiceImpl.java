@@ -38,5 +38,18 @@ public class CheckItemServiceImpl implements CheckItemService {
         return new PageResult(page.getTotal(), page.getResult());
     }
 
+    @Override
+    public void delete(Integer id) {
+        // 查询当前检查项是否和检查组关联
+        long count = checkItemDao.findCountByCheckItemId(id);
+        // 如果关联, 不能删除, 就抛出异常
+        if (count > 0) {
+            throw new RuntimeException("当前检查项被引用, 不能删除");
+        } else {
+            // 如果没有关联就根据id删除
+            checkItemDao.deleteById(id);
+        }
+    }
+
 
 }

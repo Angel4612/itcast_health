@@ -51,4 +51,20 @@ public class CheckItemController {
         PageResult pageResult = checkItemService.pageQuery(queryPageBean);
         return pageResult;
     }
+
+    /**
+     * 删除检查项
+     */
+    @RequestMapping("/delete")
+    public Result delete(Integer id) {
+        try {
+            checkItemService.delete(id);
+        }catch (RuntimeException e) {
+            return new Result(false, e.getMessage());
+        }catch (Exception e) {
+            return new Result(false, MessageConstant.DELETE_CHECKITEM_FAIL);
+        }
+
+        return new Result(true, MessageConstant.DELETE_CHECKITEM_SUCCESS);
+    }
 }
