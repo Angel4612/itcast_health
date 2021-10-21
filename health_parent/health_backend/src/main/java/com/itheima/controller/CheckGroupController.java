@@ -2,6 +2,8 @@ package com.itheima.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.itheima.constant.MessageConstant;
+import com.itheima.entity.PageResult;
+import com.itheima.entity.QueryPageBean;
 import com.itheima.entity.Result;
 import com.itheima.pojo.CheckGroup;
 import com.itheima.service.CheckGroupService;
@@ -33,6 +35,15 @@ public class CheckGroupController {
             e.printStackTrace();
             return new Result(false, MessageConstant.ADD_CHECKGROUP_FAIL);
         }
+    }
+
+    /**
+     * 检查组分页查询
+     */
+    @RequestMapping("/findPage")
+    public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
+        PageResult pageResult = checkGroupService.findPage(queryPageBean);
+        return pageResult;
     }
 
 }

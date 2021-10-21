@@ -9,8 +9,8 @@
         keyProperty: selectKey语句的结果, 应该被设置到的目标属性
         resultType: 结果的类型, 通常可以推断, 为了更加明确建议写上
         order:
-            设置为BEFORE, 会先生成主键再执行插入语句
-            设置为AFTER, 会先执行插入语句再生成主键
+            设置为BEFORE, 会先生成主键, 然后执行selectKey, 再执行插入语句
+            设置为AFTER, 会先执行插入语句, 再执行selectKey语句
     -->
     <insert id="add" parameterType="com.itheima.pojo.CheckGroup">
 
@@ -31,5 +31,13 @@
         values
             (#{checkgroup_id},#{checkitem_id})
     </insert>
+
+    <!--根据指定条件查询数据-->
+    <select id="selectByCondition" resultType="com.itheima.pojo.CheckGroup" parameterType="String">
+        select * from t_checkgroup
+        <if test="value != null and value.length > 0">
+            where code = #{value} or name = #{value} or helpCode = #{value}
+        </if>
+    </select>
 
 </mapper>
