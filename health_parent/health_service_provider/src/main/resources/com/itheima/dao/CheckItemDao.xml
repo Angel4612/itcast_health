@@ -66,4 +66,8 @@
     </update>
 
 
+    <!--查询所有检查项-->
+    <select id="findAll" resultType="com.itheima.pojo.CheckItem">
+        select * from t_checkitem
+    </select>
 </mapper>

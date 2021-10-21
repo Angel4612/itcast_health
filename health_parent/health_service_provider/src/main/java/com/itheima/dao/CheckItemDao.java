@@ -5,6 +5,8 @@ import com.itheima.entity.QueryPageBean;
 import com.itheima.entity.Result;
 import com.itheima.pojo.CheckItem;
 
+import java.util.List;
+
 public interface CheckItemDao {
     /*添加检查项的功能*/
     void add(CheckItem checkItem);
@@ -26,4 +28,7 @@ public interface CheckItemDao {
 
     /*编辑检查项*/
     void edit(CheckItem checkItem);
+
+    /*查询所有检查项*/
+    List<CheckItem> findAll();
 }

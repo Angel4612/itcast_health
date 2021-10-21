@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * 体检检查项管理
  */
@@ -94,5 +96,18 @@ public class CheckItemController {
             e.printStackTrace();
             return new Result(false, MessageConstant.EDIT_CHECKITEM_FAIL);
         }
+    }
+
+    /**
+     * 查询所有检查项
+     */
+    @RequestMapping("/findAll")
+    public Result findAll() {
+        // 查询数据
+        List<CheckItem> list = checkItemService.findAll();
+        if (list != null && list.size() > 0) { // 如果集合不为空, 或者集合的长度大于0, 证明查询成功
+            return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, list);
+        }
+        return new Result(false, MessageConstant.QUERY_CHECKITEM_FAIL);
     }
 }

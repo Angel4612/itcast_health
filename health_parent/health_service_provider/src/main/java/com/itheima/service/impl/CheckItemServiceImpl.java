@@ -11,6 +11,8 @@ import com.itheima.service.CheckItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service(interfaceClass = CheckItemService.class)
 @Transactional
 public class CheckItemServiceImpl implements CheckItemService {
@@ -18,11 +20,13 @@ public class CheckItemServiceImpl implements CheckItemService {
     @Autowired
     private CheckItemDao checkItemDao;
 
+    /*添加检查项的功能*/
     @Override
     public void add(CheckItem checkItem) {
         checkItemDao.add(checkItem);
     }
 
+    /*分页查询功能*/
     @Override
     public PageResult pageQuery(QueryPageBean queryPageBean) {
         Integer currentPage = queryPageBean.getCurrentPage();
@@ -38,6 +42,7 @@ public class CheckItemServiceImpl implements CheckItemService {
         return new PageResult(page.getTotal(), page.getResult());
     }
 
+    /*删除检查项的功能*/
     @Override
     public void delete(Integer id) {
         // 查询当前检查项是否和检查组关联
@@ -51,15 +56,24 @@ public class CheckItemServiceImpl implements CheckItemService {
         }
     }
 
+    /*根据id查找信息*/
     @Override
     public CheckItem findById(Integer id) {
         CheckItem checkItem = checkItemDao.findById(id);
         return checkItem;
     }
 
+    /*编辑检查项*/
     @Override
     public void edit(CheckItem checkItem) {
         checkItemDao.edit(checkItem);
+    }
+
+    /*查询所有检查项*/
+    @Override
+    public List<CheckItem> findAll() {
+        List<CheckItem> list = checkItemDao.findAll();
+        return list;
     }
 
 

@@ -4,6 +4,8 @@ import com.itheima.entity.PageResult;
 import com.itheima.entity.QueryPageBean;
 import com.itheima.pojo.CheckItem;
 
+import java.util.List;
+
 /**
  * 服务接口
  */
@@ -22,4 +24,7 @@ public interface CheckItemService {
 
     /*编辑检查项*/
     void edit(CheckItem checkItem);
+
+    /*查询所有检查项*/
+    List<CheckItem> findAll();
 }
