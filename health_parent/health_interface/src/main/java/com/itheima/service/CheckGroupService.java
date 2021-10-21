@@ -26,4 +26,14 @@ public interface CheckGroupService {
      * 根据检查组id, 查询关联的检查项id, 用于数据回显
      */
     List<Integer> findCheckItemIdsByCheckGroupId(Integer id);
+
+    /**
+     * 编辑检查组
+     */
+    void edit(CheckGroup checkGroup, Integer[] checkitemIds);
+
+    /**
+     * 删除检查组
+     */
+    void delete(Integer id);
 }

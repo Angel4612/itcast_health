@@ -75,4 +75,44 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     public List<Integer> findCheckItemIdsByCheckGroupId(Integer id) {
         return checkGroupDao.findCheckItemIdsByCheckGroupId(id);
     }
+
+    /**
+     * 编辑检查组
+     */
+    @Override
+    public void edit(CheckGroup checkGroup, Integer[] checkitemIds) {
+        // 根据检查组id, 删除中间表中所有关联的数据
+        checkGroupDao.deleteAssociation(checkGroup.getId());
+        // 向中间表插入关联数据
+        setCheckGroupAndCheckItem(checkGroup.getId(), checkitemIds);
+        // 更新检查组基本信息
+        checkGroupDao.edit(checkGroup);
+    }
+
+    /**
+     * 向中间表插入数据
+     */
+    public void setCheckGroupAndCheckItem(Integer checkGroupId, Integer[] checkitemIds) {
+        if (checkitemIds != null && checkitemIds.length > 0) {
+            for (Integer checkitemId : checkitemIds) {
+                HashMap<String, Integer> map = new HashMap<>();
+                map.put("checkgroup_id", checkGroupId);
+                map.put("checkitem_id", checkitemId);
+                // 将map集合中的数据, 插入到中间表中
+                checkGroupDao.setCheckGroupAndCheckItem(map);
+            }
+        }
+    }
+
+    /**
+     * 根据id删除检查组
+     * @param id
+     */
+    @Override
+    public void delete(Integer id) {
+        // 删除当前检查组id关联的中间表数据
+        checkGroupDao.deleteAssociation(id);
+        // 删除检查组数据
+        checkGroupDao.delete(id);
+    }
 }

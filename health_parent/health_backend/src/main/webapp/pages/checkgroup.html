@@ -285,6 +285,22 @@
         methods: {
             //编辑
             handleEdit() {
+                //发送ajax请求，提交模型数据
+                axios.post("/checkgroup/edit.do?checkitemIds="+this.checkitemIds,this.formData).
+                then((response)=> {
+                    //隐藏编辑窗口
+                    this.dialogFormVisible4Edit = false;
+                    if(response.data.flag){
+                        this.$message({
+                            message: response.data.message,
+                            type: 'success'
+                        });
+                    }else{
+                        this.$message.error(response.data.message);
+                    }
+                }).finally(()=> {
+                    this.findPage();
+                });
             },
             //添加
             handleAdd() {
@@ -411,6 +427,34 @@
             },
             // 删除
             handleDelete(row) {
+                // 弹出确认窗口
+                this.$confirm("确定要删除当前检查组吗?", "提示", {
+                    type: "warning"
+                }).then(() => {
+                    // 删除检查组
+                    axios.get("/checkgroup/delete.do?id=" + row.id).then(
+                        (res) => {
+                            if(res.data.flag) {
+                                // 提示删除成功
+                                this.$message({
+                                    message: res.data.message,
+                                    type: 'success'
+                                });
+                                // 重新进行分页查询
+                                this.findPage();
+                            } else {
+                                // 提示删除失败
+                                this.$message.error(res.data.message);
+                            }
+                        }
+                    );
+                }).catch(() => {
+                    this.$message({
+                        message: "操作已取消",
+                        type: 'info'
+                    });
+                });
+
             }
         }
     })
