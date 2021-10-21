@@ -306,7 +306,7 @@
                             this.$message(res.data.message);
                         }
                     }).finally(() => {
-                        // this.findPage();
+                        this.findPage();
                 });
             },
             //分页查询
@@ -325,7 +325,8 @@
                 this.dialogFormVisible = true;
                 // 每次点击新建都要切换到第一个基本信息的标签页
                 this.activeName = 'first';
-                //
+                // 重置复选框中的内容
+                this.checkitemIds = [];
                 // 数据回显
                 // 发送ajax请求, 查询检查项信息, 赋值给tableData
                 axios.get("/checkitem/findAll.do").then((res) => {
