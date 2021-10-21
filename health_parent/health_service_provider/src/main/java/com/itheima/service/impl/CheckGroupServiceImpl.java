@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Service(interfaceClass = CheckGroupService.class)
 @Transactional
@@ -39,6 +40,11 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         }
     }
 
+    /**
+     * 检查组分页查询
+     * @param queryPageBean
+     * @return
+     */
     @Override
     public PageResult findPage(QueryPageBean queryPageBean) {
         // 通过PageHelper设置当前页码和每页数量
@@ -50,5 +56,23 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         // 将数据总个数和所有查询出来数据的List集合封装到PageResult中, 并返回
         PageResult pageResult = new PageResult(checkGroups.getTotal(), checkGroups.getResult());
         return pageResult;
+    }
+
+    /**
+     * 根据id查询检查组信息
+     * @param id
+     * @return
+     */
+    @Override
+    public CheckGroup findById(Integer id) {
+        return checkGroupDao.findById(id);
+    }
+
+    /**
+     * 根据检查组id, 查询关联的检查项id, 用于数据回显
+     */
+    @Override
+    public List<Integer> findCheckItemIdsByCheckGroupId(Integer id) {
+        return checkGroupDao.findCheckItemIdsByCheckGroupId(id);
     }
 }

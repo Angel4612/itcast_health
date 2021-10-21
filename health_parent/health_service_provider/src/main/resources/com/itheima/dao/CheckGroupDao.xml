@@ -40,4 +40,14 @@
         </if>
     </select>
 
+    <!--根据id查询检查组信息-->
+    <select id="findById" parameterType="Integer" resultType="com.itheima.pojo.CheckGroup">
+        select * from t_checkgroup where id = #{id}
+    </select>
+
+
+    <!--根据检查组id, 查询关联的检查项id, 用于数据回显-->
+    <select id="findCheckItemIdsByCheckGroupId" resultType="Integer" parameterType="Integer">
+        select checkitem_id from t_checkgroup_checkitem where checkgroup_id = #{checkgroup_id}
+    </select>
 </mapper>

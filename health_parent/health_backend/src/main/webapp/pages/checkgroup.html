@@ -355,6 +355,52 @@
             },
             // 弹出编辑窗口
             handleUpdate(row) {
+                // 发送ajax请求, 根据当前行的id, 查询出当前数据, 用于回显
+                axios.get("/checkgroup/findById.do?id=" + row.id).then(
+                    (res) => {
+                        // 如果服务器正确响应
+                        if (res.data.flag) {
+                            // 弹出编辑窗口
+                            this.dialogFormVisible4Edit = true;
+                            // 默认选中第一个标签页
+                            this.activeName = 'first';
+                            // 为模型数据赋值(formData)
+                            this.formData = res.data.data;
+                            // **以上是第一个标签页中的信息, 第二个标签页还需要显示所有检查项信息, 所以需要再次发送ajax请求**
+                            // 发送ajax请求, 用于获取所有检查项
+                            axios.get("/checkitem/findAll.do").then(
+                                (res) => {
+                                    // 如果服务器正确响应
+                                    if (res.data.flag) {
+                                        // 请求所有检查项成功
+                                        // 为模型数据赋值(tableData)
+                                        this.tableData = res.data.data;
+                                        // **这里显示出所有检查项, 但是已经有关联的检查项需要会先, 所有需要再次发送ajax请求**
+                                        axios.get("/checkgroup/findCheckItemIdsByCheckGroupId.do?id=" +row.id).then(
+                                            (res) => {
+                                                // 如果请求回显的所有检查项成功
+                                                if (res.data.flag) {
+                                                    // 为模型数据赋值(checkitemIds)
+                                                    this.checkitemIds = res.data.data;
+                                                }else {
+                                                    // 请求回显的所有检查项失败
+                                                    this.$message.error(res.data.message);
+                                                }
+                                            }
+                                        );
+                                    }else {
+                                        // 请求所有检查项时失败
+                                        this.$message.error(res.data.message);
+                                    }
+                                }
+                            );
+
+                        } else {
+                            // 请求当前数据时失败
+                            this.$message.error("获取数据失败, 请刷新页面");
+                        }
+                    }
+                );
             },
             //切换页码
             handleCurrentChange(currentPage) {
