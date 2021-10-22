@@ -105,4 +105,20 @@ public class CheckGroupController {
         }
     }
 
+    /**
+     * 用于查询所有检查组的功能
+     */
+    @RequestMapping("/findAll")
+    public Result findAll() {
+        try {
+            List<CheckGroup> list = checkGroupService.findAll();
+            if (list != null && list.size() > 0) {
+                return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS, list);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new Result(false,MessageConstant.QUERY_CHECKGROUP_FAIL);
+    }
+
 }

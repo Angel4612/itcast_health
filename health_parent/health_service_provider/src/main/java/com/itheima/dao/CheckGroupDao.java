@@ -47,4 +47,9 @@ public interface CheckGroupDao {
      * 删除检查组基本信息数据
      */
     void delete(Integer id);
+
+    /**
+     * 查询所有检查组
+     */
+    List<CheckGroup> findAll();
 }

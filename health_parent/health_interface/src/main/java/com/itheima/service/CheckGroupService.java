@@ -36,4 +36,9 @@ public interface CheckGroupService {
      * 删除检查组
      */
     void delete(Integer id);
+
+    /**
+     * 查询所有检查组
+     */
+    List<CheckGroup> findAll();
 }
