@@ -25,4 +25,17 @@ public interface SetMealDao {
      * 新增体检套餐和检查组的关联关系
      */
     void setSetmealAndCheckGroup(Map<String, Integer> map);
+
+    /**
+     * 获取所有套餐信息
+     * @return
+     */
+    List<Setmeal> findAll();
+
+    /**
+     * 根据id查询套餐信息
+     * @param id
+     * @return
+     */
+    Setmeal findById(Integer id);
 }
