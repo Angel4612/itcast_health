@@ -26,7 +26,18 @@
         select * from t_ordersetting where orderDate between #{begin} and #{end}
     </select>
 
+    <!--根据预约日期, 修改可预约人数-->
     <update id="editNumberByDate" parameterType="com.itheima.pojo.OrderSetting">
         update t_ordersetting set number = #{number} where orderDate = #{orderDate}
+    </update>
+
+    <!--根据预约日期, 查询预约配置-->
+    <select id="findByOrderDate" resultType="com.itheima.pojo.OrderSetting" parameterType="java.util.Date">
+        select * from t_ordersetting where orderDate = #{date}
+    </select>
+
+    <!--修改已预约人数-->
+    <update id="editReservationsByOrderDate" parameterType="com.itheima.pojo.OrderSetting">
+        update t_ordersetting set reservations = #{reservations} where orderDate = #{orderDate}
     </update>
 </mapper>

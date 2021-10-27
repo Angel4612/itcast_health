@@ -43,5 +43,18 @@ public interface OrderSettingDao {
      */
     void editNumberByDate(OrderSetting orderSetting);
 
+    /**
+     * 根据预约日期, 查询预约配置
+     */
+    OrderSetting findByOrderDate(Date date);
+
+    /**
+     * 修改已预约人数
+     */
+    void editReservationsByOrderDate(OrderSetting orderSetting);
+
+
+
+
 
 }
