@@ -22,4 +22,8 @@
                 (#{fileNumber},#{name},#{sex},#{idCard},#{phoneNumber}, #{regTime},#{password},#{email},#{birthday},#{remark})
     </insert>
 
+    <!--根据日期, 统计当前月之前会员人数-->
+    <select id="findMemberCountBeforeDate" parameterType="String" resultType="Integer">
+        select count(*) from t_member where regTime &lt;= #{date}
+    </select>
 </mapper>

@@ -3,6 +3,8 @@ package com.itheima.service;
 
 import com.itheima.pojo.Member;
 
+import java.util.List;
+
 public interface MemberService {
 
     /**
@@ -17,4 +19,9 @@ public interface MemberService {
      * @return
      */
     public Member findByTelephone(String telephone);
+
+    /**
+     * 根据集合中的月份信息, 查询出每一个月之前的会员人数
+     */
+    List<Integer> findMemberCountByMonth(List<String> monthList);
 }
