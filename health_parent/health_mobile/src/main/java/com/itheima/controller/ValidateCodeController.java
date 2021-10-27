@@ -43,4 +43,29 @@ public class ValidateCodeController {
         return new Result(true, MessageConstant.SEND_VALIDATECODE_SUCCESS);
     }
 
+    /**
+     * 手机快速登录时, 发送手机验证码
+     */
+    @RequestMapping("/send4Login")
+    public Result send4Login(String telephone) {
+        // 生成验证码
+        Integer code = ValidateCodeUtils.generateValidateCode(6);
+        // 发送短信验证
+        try {
+            SMSUtils.sendShortMessage(SMSUtils.VALIDATE_CODE, telephone, code.toString());
+        } catch (ClientException e) {
+            e.printStackTrace();
+            //验证码发送失败
+            return new Result(false, MessageConstant.SEND_VALIDATECODE_FAIL);
+        }
+
+        System.out.println("发送的手机验证码为：" + code);
+        //将生成的验证码缓存到redis
+        jedisPool.getResource().setex(telephone+RedisMessageConstant.SENDTYPE_LOGIN,
+                5 * 60,
+                code.toString());
+        //验证码发送成功
+        return new Result(true,MessageConstant.SEND_VALIDATECODE_SUCCESS);
+    }
+
 }
