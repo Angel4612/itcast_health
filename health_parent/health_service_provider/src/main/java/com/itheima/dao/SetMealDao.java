@@ -38,4 +38,10 @@ public interface SetMealDao {
      * @return
      */
     Setmeal findById(Integer id);
+
+    /**
+     * 查询套餐和套餐人数
+     * @return
+     */
+    List<Map<String, Object>> findSetmealCount();
 }

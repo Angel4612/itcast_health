@@ -162,4 +162,11 @@ public class SetMealServiceImpl implements SetMealService {
             }
         }
     }
+
+
+    @Override
+    public List<Map<String, Object>> findSetmealCount() {
+        List<Map<String, Object>> list = setMealDao.findSetmealCount();
+        return list;
+    }
 }

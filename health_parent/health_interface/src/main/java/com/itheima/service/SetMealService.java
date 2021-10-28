@@ -5,6 +5,7 @@ import com.itheima.entity.QueryPageBean;
 import com.itheima.pojo.Setmeal;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SetMealService {
 
@@ -32,4 +33,10 @@ public interface SetMealService {
      * @return
      */
     Setmeal findById(Integer id);
+
+    /**
+     * 查找套餐和套餐人数
+     * @return
+     */
+    List<Map<String, Object>> findSetmealCount();
 }

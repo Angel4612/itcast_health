@@ -70,4 +70,11 @@
     </select>
 
 
+    <!--查询套餐名称和套餐人数-->
+    <select id="findSetmealCount" resultType="map">
+        select s.name, count(*) as value
+        from t_setmeal s, t_order o
+        where o.setmeal_id = s.id
+        group by s.name
+    </select>
 </mapper>
