@@ -53,13 +53,60 @@
 
     <!--根据id查询体检人, 体检套餐, 体检日期, 预约类型-->
     <select id="findById4Detail" parameterType="Integer" resultType="map">
-        select m.name member ,s.name setmeal,o.orderDate orderDate,o.orderType orderType
-        from
-            t_order o,
-            t_member m,
-            t_setmeal s
-        where o.member_id=m.id and o.setmeal_id=s.id and o.id=#{id}
+        select m.name member, s.name setmeal, o.orderDate orderDate, o.orderType orderType
+        from t_order o,
+             t_member m,
+             t_setmeal s
+        where o.member_id = m.id
+          and o.setmeal_id = s.id
+          and o.id = #{id}
     </select>
 
 
+    <!--获取今日预约人数-->
+    <select id="findOrderCountByDate" resultType="Integer" parameterType="String">
+        select count(*)
+        from t_order
+        where orderDate = #{date}
+    </select>
+
+    <!--获取从指定日期开始的预约人数-->
+    <select id="findOrderCountAfterDate" resultType="Integer" parameterType="String">
+        select count(*)
+        from t_order
+        where orderDate >= #{date}
+    </select>
+
+    <!--获取今日到诊人数-->
+    <select id="findVisitsCountByDate" resultType="Integer" parameterType="String">
+        select count(*)
+        from t_order
+        where orderDate = #{date}
+          and orderStatus = '已到诊'
+    </select>
+
+    <!--获取从指定日期开始的到诊人数-->
+    <select id="findVisitsCountAfterDate" resultType="Integer" parameterType="String">
+        select count(*)
+        from t_order
+        where orderDate >= #{date}
+          and orderStatus = '已到诊'
+    </select>
+
+    <!--获取前四个热门套餐
+        name:'阳光爸妈升级肿瘤12项筛查（男女单人）体检套餐',setmeal_count:200,proportion:0.222
+     -->
+    <select id="findHotSetmeal" resultType="map">
+        select
+            s.id,
+            s.name ,
+            count(s.name) setmeal_count ,
+            count(s.name) / (select count(*) from t_order) proportion,
+            s.remark
+        from t_order o, t_setmeal s
+        where s.id = o.setmeal_id
+        group by s.id
+        order by setmeal_count
+            limit 0, 4;
+    </select>
 </mapper>

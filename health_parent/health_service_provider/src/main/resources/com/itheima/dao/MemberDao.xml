@@ -26,4 +26,20 @@
     <select id="findMemberCountBeforeDate" parameterType="String" resultType="Integer">
         select count(*) from t_member where regTime &lt;= #{date}
     </select>
+
+
+    <!--获取今日新增会员数-->
+    <select id="findMemberCountByDate" resultType="Integer" parameterType="String">
+        select count(*) from t_member where regTime = #{date}
+    </select>
+
+    <!--获取总会员数-->
+    <select id="findMemberTotalCount" resultType="Integer">
+        select count(*) from t_member
+    </select>
+
+    <!--获取指定日期之后的新增会员人数-->
+    <select id="findMemberCountAfterDate" parameterType="String" resultType="Integer">
+        select count(*) from t_member where regTime >= #{date}
+    </select>
 </mapper>
